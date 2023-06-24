@@ -39,7 +39,8 @@ public class RNImgToBase64Module extends ReactContextBaseJavaModule {
       if (uri.contains("http")) {
         image = getBitmapFromURL(uri);
       } else {
-        image = MediaStore.Images.Media.getBitmap(reactContext.getContentResolver(), Uri.parse(uri));
+        int resourceId = reactContext.getResources().getIdentifier(uri, "drawable", reactContext.getPackageName());
+        image = BitmapFactory.decodeResource(reactContext.getResources(), resourceId);
       }
       if (image == null) {
         promise.reject("Error", "Failed to decode Bitmap, uri: " + uri);
